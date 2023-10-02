@@ -16,6 +16,8 @@ Then enter Youtube Link of the song you want to know the chord progression of. N
 <img width="960" alt="image" src="https://github.com/wycmichelle11/ChordProgressionGenerator/assets/79016649/e27d450e-dae2-47d5-87ea-59b22d88a639"><br>
 Select submit then just wait.<br>
 In a few moments, the chord progression will be displayed.<br>
-<img width="960" alt="image" src="https://github.com/wycmichelle11/ChordProgressionGenerator/assets/79016649/1f576dea-14e5-47d0-87ba-ba60a26d3c9a"><br><br>
+<img width="960" alt="image" src="https://github.com/wycmichelle11/ChordProgressionGenerator/assets/79016649/1f576dea-14e5-47d0-87ba-ba60a26d3c9a">
+<img width="960" alt="image" src="https://github.com/wycmichelle11/ChordProgressionGenerator/assets/79016649/52aede01-cc92-4cbe-853f-bcfba70d56b6">
+<br><br>
 There are a lot of chord for the whole song. As an iterative process, it would be useful to find patterns in the chord progression and narrow it down to the progression that is repeating. 
 Additionally, as time progresses, it would be useful to use a machine learning process to correct the extraction to make sure it is accurate.
