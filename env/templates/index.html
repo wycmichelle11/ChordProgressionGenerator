@@ -19,8 +19,8 @@
 					<h1><a href="index.html">Chord Progression Generator</a> by Michelle Cheung</h1>
 					<nav id="nav">
 						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li>
+							<!-- <li><a href="index.html">Home</a></li> -->
+							<!-- <li>
 								<a href="#" class="icon solid fa-angle-down">Layouts</a>
 								<ul>
 									<li><a href="generic.html">Generic</a></li>
@@ -36,8 +36,8 @@
 										</ul>
 									</li>
 								</ul>
-							</li>
-							<li><a href="#" class="button">Sign Up</a></li>
+							</li> -->
+							<!-- <li><a href="#" class="button">Sign Up</a></li> -->
 						</ul>
 					</nav>
 				</header>
@@ -75,6 +75,10 @@
 								.then(data => {
 									
 									console.log(data);
+
+									const chordProgressionElement = document.getElementById('chordProgression');
+									chordProgressionElement.innerHTML = ''; //clear previous content
+									chordProgressionElement.textContent = data.chordProgression;
 								})
 								.catch(error => {
 									console.error('Error:', error);
@@ -91,14 +95,14 @@
 					<section class="box special">
 						<header class="major">
 							<h2>The Chord Progression will be displayed here.</h2>
-							<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc ornare<br />
-							adipiscing nunc adipiscing. Condimentum turpis massa.</p>
 						</header>
 						<div id="chordProgressionDisplay">
-							{% if chordProgression %}
+							<!-- {% if chordProgression %}
 							<h2>Chord Progression:</h2>
 							<p>{{ chordProgression }}</p>
-							{% endif %}
+							{% endif %} -->
+							<p id="chordProgression"></p>
+
 
 						</div>
 					</section>
