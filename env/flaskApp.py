@@ -30,6 +30,7 @@ def process_yt_url():
         if not audioFilePath:
             return jsonify({'error': 'Failed to download audio'}), 500
         print("made it here3")
+        print(audioFilePath)
         #Perform chord recognition
         chordProgression = recognize_chords(audioFilePath)
         if not chordProgression:
@@ -60,25 +61,44 @@ def download_audio(url):
         audio.download(filename=tempAudioFileName) #Download audio to outputPath
         print("Audio downloaded successfully")
         audio_clip = AudioFileClip(tempAudioFileName) #load file
-        print("wadeee")
         audio_clip.write_audiofile("output_audio.wav")
-        print("here")
-        return "output_file.wav"
+        return "output_audio.wav"
     except Exception as e:
         print(f"Error during audio download and conversion: {str(e)}")
         return None
 
 def recognize_chords(audioFilePath):
     try:
+        print("wadeeee")
         y, sr = librosa.load(audioFilePath) #load file. y is audio signal and se is sample rate
-        yHarmonic, yPercussive = librosa.effects.hpss(y) #decompose harmonic and percussive parts
-        chromagram = librosa.feature.chroma_cens(y=yHarmonic, sr=sr) #extract chroma (pitch components)
-        chromagram = np.transpose(chromagram) #transpose for better recognition
-        chords = librosa.segment.recurrence_matrix(chromagram)
-        chordLabels = librosa.decompose.nn_filter(chords, aggregate=np.median) #filter by nearest neighbour feature
-        chordSymbols = librosa.hz_to_midi(chordLabels)
-        chordProgression = [librosa.midi_to_note(chord) for chord in chordSymbols] #convert to readable chordnames
-        return ' '.join(chordProgression)
+        print("ember")
+        # yHarmonic, yPercussive = librosa.effects.hpss(y) #decompose harmonic and percussive parts
+        # print("water")
+        # chromagram = librosa.feature.chroma_cens(y=yHarmonic, sr=sr) #extract chroma (pitch components)
+        # print("fire")
+        # chromagram = np.transpose(chromagram) #transpose for better recognition
+        # print("earth")
+        # chords = librosa.segment.recurrence_matrix(chromagram)
+        # print("wind")
+        # chordLabels = librosa.decompose.nn_filter(chords, aggregate=np.median) #filter by nearest neighbour feature
+        # print("elemental")
+        # chordSymbols = librosa.hz_to_midi(chordLabels)
+        # print("city")
+        # valid_chordSymbols = [chord for chord in chordSymbols if not np.isinf(chord).any()]
+        # print(chordSymbols)
+        # chordProgression = [librosa.midi_to_note(chord) for chord in valid_chordSymbols] #convert to readable chordnames
+        # print("elementsss")
+        y, sr = librosa.load(audioFilePath) #load audio file
+        print("water")
+        chroma = librosa.feature.chroma_cqt(y=y, sr=sr) #perform chromagram analysis, pitch class profiles
+        print("fire")
+        chords = librosa.decompose.nn_filter(chroma) #filter by nearest neighbour
+        print("earth")
+        chordLabels = librosa.core.hz_to_note(chords[0]) #convert the indices to chord progression labels
+        print("wind")
+        print(chordLabels)
+        # return chordLabels
+        return ' '.join(chordLabels)
     except Exception as e:
         print(f"Chord recognition error: {str(e)}")
         return None
