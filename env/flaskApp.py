@@ -1,9 +1,13 @@
 from flask import Flask, request, jsonify, render_template #Flask create web app, request handles http requests, jsonify converts python dictionary to kson response, render_template to render HTML file
 from pytube import YouTube
 import re #regular expression
+import imageio_ffmpeg as ffmpeg
+import os
 import librosa
 import numpy as np
 from pydub import AudioSegment
+from moviepy.editor import *
+import soundfile as sf
 
 ytURLPattern = r'^(https?://)?(www\.)?youtube\.com/watch\?v=[\w-]+(&\S*)?$' #typical yt url pattern
 
@@ -51,16 +55,17 @@ def download_audio(url):
     try:
         yt = YouTube(url) #yt object
         #Select stream of downloading
-        audio = yt.streams.filter(only_audio=True, file_extension='mp4').first()
-        audio.download(filename='audioFile.mp4') #Download audio to outputPath
+        audio = yt.streams.filter(only_audio=True, file_extension="mp4").first()
+        tempAudioFileName = "tempAudioFileName.mp4"
+        audio.download(filename=tempAudioFileName) #Download audio to outputPath
         print("Audio downloaded successfully")
-        input_audio = "audioFile.mp4"
-        output_wav = "output_file.wav"
-        audiof = AudioSegment.from_file(input_audio) #load audio
-        print("loaded!")
-        audiof.export(output_wav, format="wav")
-        return output_wav
+        audio_clip = AudioFileClip(tempAudioFileName) #load file
+        print("wadeee")
+        audio_clip.write_audiofile("output_audio.wav")
+        print("here")
+        return "output_file.wav"
     except Exception as e:
+        print(f"Error during audio download and conversion: {str(e)}")
         return None
 
 def recognize_chords(audioFilePath):
