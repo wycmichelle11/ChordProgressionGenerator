@@ -3,6 +3,7 @@ from pytube import YouTube
 import re #regular expression
 import librosa
 import numpy as np
+from pydub import AudioSegment
 
 ytURLPattern = r'^(https?://)?(www\.)?youtube\.com/watch\?v=[\w-]+(&\S*)?$' #typical yt url pattern
 
@@ -53,7 +54,12 @@ def download_audio(url):
         audio = yt.streams.filter(only_audio=True, file_extension='mp4').first()
         audio.download(filename='audioFile.mp4') #Download audio to outputPath
         print("Audio downloaded successfully")
-        return 'audioFile.mp4'
+        input_audio = "audioFile.mp4"
+        output_wav = "output_file.wav"
+        audiof = AudioSegment.from_file(input_audio) #load audio
+        print("loaded!")
+        audiof.export(output_wav, format="wav")
+        return output_wav
     except Exception as e:
         return None
 
